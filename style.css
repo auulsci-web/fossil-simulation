@@ -1,0 +1,476 @@
+/* 
+   화석화 성공 탐구 시뮬레이터 스타일시트
+   디자인 테마: 프리미엄 과학 탐구 장비 (Dark Tech Theme)
+*/
+
+:root {
+    --bg_primary: hsl(220, 30%, 10%);
+    --bg_secondary: hsl(220, 25%, 15%);
+    --bg_tertiary: hsl(220, 20%, 20%);
+    
+    --text_main: hsl(220, 10%, 95%);
+    --text_muted: hsl(220, 10%, 70%);
+    
+    --color_success: hsl(150, 75%, 45%);
+    --color_success_glow: hsla(150, 75%, 45%, 0.3);
+    --color_failure: hsl(355, 75%, 55%);
+    --color_failure_glow: hsla(355, 75%, 55%, 0.2);
+    
+    --color_primary: hsl(195, 85%, 50%);
+    --color_primary_glow: hsla(195, 85%, 50%, 0.4);
+    
+    --border_color: hsl(220, 20%, 25%);
+    --border_focus: hsl(195, 85%, 50%);
+    
+    --transition_speed: 0.4s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg_primary);
+    color: var(--text_main);
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app_container {
+    max-width: 1000px;
+    width: 100%;
+    background-color: var(--bg_secondary);
+    border: 1px solid var(--border_color);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 헤더 디자인 */
+.app_header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border_color);
+    padding-bottom: 1.5rem;
+}
+
+.app_title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 0%, var(--color_primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.app_subtitle {
+    color: var(--text_muted);
+    font-size: 1.05rem;
+    font-weight: 300;
+}
+
+/* 상단: 입력 컨트롤 패널 */
+.control_panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.control_group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control_label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color_primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.select_wrapper {
+    position: relative;
+}
+
+.select_wrapper::after {
+    content: "▼";
+    font-size: 0.7rem;
+    color: var(--text_muted);
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.control_select {
+    width: 100%;
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    background-color: var(--bg_tertiary);
+    border: 1px solid var(--border_color);
+    border-radius: 8px;
+    color: var(--text_main);
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.control_select:focus {
+    outline: none;
+    border-color: var(--border_focus);
+    box-shadow: 0 0 8px var(--color_primary_glow);
+}
+
+/* 중간: 이미지 카드 레이아웃 */
+.display_panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+@media (max-width: 768px) {
+    .display_panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+.image_card {
+    background-color: var(--bg_tertiary);
+    border: 1px solid var(--border_color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform var(--transition_speed), box-shadow var(--transition_speed);
+}
+
+.image_card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card_title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text_main);
+    text-align: center;
+    border-bottom: 2px solid var(--border_color);
+    width: 100%;
+    padding-bottom: 0.5rem;
+}
+
+.image_frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg_primary);
+    border: 1px solid var(--border_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image_frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter var(--transition_speed);
+}
+
+.blur_effect {
+    filter: blur(10px) grayscale(100%);
+}
+
+.clear_effect {
+    filter: blur(0) grayscale(0);
+}
+
+/* 화석 미발견 시 오버레이 */
+.hidden_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 15, 25, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity var(--transition_speed);
+}
+
+.overlay_content {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.lock_icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.overlay_content p {
+    font-size: 0.9rem;
+    color: var(--text_muted);
+}
+
+.card_info {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text_muted);
+    text-align: center;
+    min-height: 2.7rem;
+    display: flex;
+    align-items: center;
+}
+
+/* 하단: 결과 및 피드백 패널 */
+.result_panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-top: 1px solid var(--border_color);
+    padding-top: 2rem;
+}
+
+/* 보존 지수 점수 및 프로그레스 바 */
+.score_section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.score_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score_title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text_main);
+}
+
+.score_value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: var(--color_primary);
+    text-shadow: 0 0 10px var(--color_primary_glow);
+}
+
+.progress_container {
+    width: 100%;
+}
+
+.progress_track {
+    position: relative;
+    height: 16px;
+    background-color: var(--bg_tertiary);
+    border-radius: 8px;
+    border: 1px solid var(--border_color);
+    overflow: visible; /* 목표선 라벨 노출을 위해 변경 */
+}
+
+.progress_bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color_failure) 0%, var(--color_primary) 70%, var(--color_success) 100%);
+    border-radius: 7px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 임계치 선 */
+.threshold_line {
+    position: absolute;
+    top: -4px;
+    bottom: -4px;
+    width: 3px;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px #ffffff;
+    z-index: 5;
+    transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.threshold_label {
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.score_info_text {
+    font-size: 0.9rem;
+    color: var(--text_muted);
+    text-align: right;
+}
+
+.score_info_text strong {
+    color: var(--text_main);
+}
+
+/* 실험 실행 버튼 */
+.action_section {
+    display: flex;
+    justify-content: center;
+}
+
+.run_btn {
+    background: linear-gradient(135deg, var(--color_primary) 0%, hsl(195, 85%, 40%) 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 4px 15px var(--color_primary_glow);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.run_btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--color_primary_glow);
+    background: linear-gradient(135deg, hsl(195, 85%, 55%) 0%, hsl(195, 85%, 45%) 100%);
+}
+
+.run_btn:active {
+    transform: translateY(1px);
+}
+
+/* 결과 피드백 영역 */
+.feedback_container {
+    background-color: var(--bg_tertiary);
+    border: 1px solid var(--border_color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.4s ease;
+    opacity: 0.8;
+}
+
+.feedback_container.success_state {
+    border-color: var(--color_success);
+    box-shadow: 0 0 15px var(--color_success_glow);
+    opacity: 1;
+}
+
+.feedback_container.failure_state {
+    border-color: var(--color_failure);
+    box-shadow: 0 0 15px var(--color_failure_glow);
+    opacity: 1;
+}
+
+.feedback_header {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.status_badge {
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: var(--bg_primary);
+    border: 1px solid var(--border_color);
+    color: var(--text_muted);
+}
+
+.success_state .status_badge {
+    background-color: var(--color_success);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 0 10px var(--color_success_glow);
+    animation: pulse_glow 2s infinite;
+}
+
+.failure_state .status_badge {
+    background-color: var(--color_failure);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 0 10px var(--color_failure_glow);
+}
+
+@keyframes pulse_glow {
+    0% { box-shadow: 0 0 5px var(--color_success_glow); }
+    50% { box-shadow: 0 0 15px var(--color_success_glow); }
+    100% { box-shadow: 0 0 5px var(--color_success_glow); }
+}
+
+.feedback_content {
+    text-align: center;
+}
+
+.feedback_main_text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.success_state .feedback_main_text {
+    color: var(--color_success);
+}
+
+.failure_state .feedback_main_text {
+    color: var(--color_failure);
+}
+
+.deduction_list {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--border_color);
+}
+
+.deduction_item {
+    font-size: 0.9rem;
+    color: var(--text_muted);
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--color_failure);
+}
