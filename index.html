@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화석화 성공 탐구 시뮬레이터</title>
+    <meta name="description" content="생물의 유해가 화석으로 보존되기 위해 필요한 퇴적 환경과 보존 요인을 실시간으로 탐구하는 시뮬레이터입니다.">
+    <!-- Google Fonts: Outfit, Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app_container">
+        <!-- 헤더 섹션 -->
+        <header class="app_header">
+            <h1 class="app_title">화석화 성공 탐구 시뮬레이터</h1>
+            <p class="app_subtitle">과거 지질 시대의 생물이 화석으로 남기 위한 지구과학적 조건을 탐구해 보세요.</p>
+        </header>
+
+        <!-- 상단: 변수 조절 패널 -->
+        <section class="control_panel">
+            <div class="control_group">
+                <label for="organism_select" class="control_label">탐구 생물 선택</label>
+                <div class="select_wrapper">
+                    <select id="organism_select" class="control_select">
+                        <option value="trilobite" selected>삼엽충 (단단한 껍질)</option>
+                        <option value="anomalocaris">아노말로카리스 (질긴 껍질)</option>
+                        <option value="jellyfish">해파리 (부드러운 연체부)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control_group">
+                <label for="burial_rate_select" class="control_label">매몰 속도</label>
+                <div class="select_wrapper">
+                    <select id="burial_rate_select" class="control_select">
+                        <option value="fast" selected>빠름 (+40)</option>
+                        <option value="slow">느림 (-50)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control_group">
+                <label for="grain_size_select" class="control_label">퇴적물 입자 크기</label>
+                <div class="select_wrapper">
+                    <select id="grain_size_select" class="control_select">
+                        <option value="clay" selected>진흙 (+30)</option>
+                        <option value="sand">모래 (+10)</option>
+                        <option value="gravel">자갈 (-30)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control_group">
+                <label for="benthic_select" class="control_label">저서생물 유무</label>
+                <div class="select_wrapper">
+                    <select id="benthic_select" class="control_select">
+                        <option value="absent" selected>없음 (+20)</option>
+                        <option value="present">있음 (-20)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control_group">
+                <label for="depth_select" class="control_label">바다의 깊이</label>
+                <div class="select_wrapper">
+                    <select id="depth_select" class="control_select">
+                        <option value="deep" selected>깊은 바다 (+10)</option>
+                        <option value="shallow">얕은 바다 (-10)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- 중간: 이미지 전시 영역 -->
+        <section class="display_panel">
+            <div class="image_card" id="organism_card">
+                <h3 class="card_title">선택한 생물 (원래 모습)</h3>
+                <div class="image_frame">
+                    <img id="organism_img" src="picture/삼엽충.jpg" alt="선택한 생물 이미지">
+                </div>
+                <div class="card_info" id="organism_info">
+                    탄산칼슘의 단단한 등껍질을 가진 삼엽충입니다.
+                </div>
+            </div>
+
+            <div class="image_card" id="fossil_card">
+                <h3 class="card_title">화석화 결과</h3>
+                <div class="image_frame">
+                    <div class="hidden_overlay" id="fossil_overlay">
+                        <div class="overlay_content">
+                            <span class="lock_icon">🔒</span>
+                            <p>실험을 성공시켜 화석을 발견해 보세요!</p>
+                        </div>
+                    </div>
+                    <img id="fossil_img" src="picture/삼엽충화석.jpg" alt="화석 결과 이미지" class="blur_effect">
+                </div>
+                <div class="card_info" id="fossil_info">
+                    화석이 정상적으로 생성되면 여기에 결과가 표시됩니다.
+                </div>
+            </div>
+        </section>
+
+        <!-- 하단: 보존 지수 게이지, 실험 실행 버튼 및 피드백 패널 -->
+        <section class="result_panel">
+            <!-- 보존 지수 게이지 -->
+            <div class="score_section">
+                <div class="score_header">
+                    <span class="score_title">보존 지수 (Preservation Score)</span>
+                    <span class="score_value" id="current_score_display">0점</span>
+                </div>
+                <div class="progress_container">
+                    <div class="progress_track">
+                        <div class="progress_bar" id="score_progress_bar"></div>
+                        <!-- 성공 목표 임계치 선 -->
+                        <div class="threshold_line" id="target_threshold_line">
+                            <div class="threshold_label" id="threshold_label_text">목표: 60점</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="score_info_text">
+                    현재 생물이 화석이 되기 위한 성공 임계치: <strong id="required_score_text">60점</strong>
+                </div>
+            </div>
+
+            <!-- 실험 실행 버튼 -->
+            <div class="action_section">
+                <button type="button" id="run_experiment_btn" class="run_btn">실험 실행 (Run Experiment)</button>
+            </div>
+
+            <!-- 결과 피드백 패널 -->
+            <div class="feedback_container" id="feedback_panel">
+                <div class="feedback_header">
+                    <div class="status_badge" id="result_badge">결과 대기 중</div>
+                </div>
+                <div class="feedback_content">
+                    <p class="feedback_main_text" id="feedback_main_message">상단의 환경 변수들을 조절하고 실험 실행 버튼을 클릭하세요.</p>
+                    <div class="deduction_list" id="deduction_details">
+                        <!-- 실패 원인 피드백이 여기에 동적으로 추가됨 -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
